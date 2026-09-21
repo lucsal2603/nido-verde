@@ -8,6 +8,7 @@
   --sez: clamp(88px, 12vw, 168px); --gut: clamp(20px, 5vw, 72px);
   --r-s: 10px; --r-m: 22px; --r-l: 36px; --r-foglio: clamp(44px, 9vw, 140px);
   --timpano: polygon(0 32%, 50% 0, 100% 32%, 100% 100%, 0 100%);
+  --tetto: clamp(56px, 11vw, 180px);
   --d-veloce: 160ms; --d-base: 320ms; --d-lenta: 640ms;
   --e-out: cubic-bezier(.23, 1, .32, 1); --e-inout: cubic-bezier(.77, 0, .175, 1);
   --testata-h: 84px;
@@ -119,8 +120,8 @@ html.is-menu .testata { color: var(--carta); transform: none; }
 html.is-ridotto .manifesto__testo { color: var(--inchiostro); }
 
 /* ── il foglio che sale, e i due nidi ── */
-.foglio { position: relative; z-index: 2; margin-top: -100svh; background: var(--carta-2); border-radius: var(--r-foglio) var(--r-foglio) 0 0; }
-.nidi { padding: var(--sez) var(--gut) calc(var(--sez) * .7); }
+.foglio { position: relative; z-index: 2; margin-top: -100svh; background: var(--carta-2); clip-path: polygon(0 var(--tetto), 50% 0, 100% var(--tetto), 100% 100%, 0 100%); }
+.nidi { padding: calc(var(--tetto) + var(--sez) * .6) var(--gut) calc(var(--sez) * .7); }
 .sezione__testa { max-width: 900px; margin-bottom: clamp(48px, 7vw, 96px); }
 .sezione__intro { margin-top: 1.4em; max-width: 58ch; font-size: 1.1rem; }
 .nidi__griglia { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 64px); align-items: start; }
