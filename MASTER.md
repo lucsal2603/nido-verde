@@ -45,5 +45,7 @@ Tutto guidato dallo scroll: velo-tetto che si apre, hero pinnata con dezoom dell
 - `.bottone`: pillola 1px bordo oliva, testo oliva; `--pieno`: fondo oliva, testo bianco. Hover: fondo che scorre. Altezza 48 px.
 - `.occhiello`: corsivo serif, colore salvia.
 - `.nido` (card casetta): tetto a timpano con due falde che si aprono, corpo su carta.
+- `.coccole` (indice di traverso, da public-house.ch): fondo notte, parole Albert Sans 600 a 9.6vw ruotate 33° con origine in alto a sinistra, binario 1.5px carta lungo 300vw che si allunga in scrub, foto sfalsate (destra 3:4 + seconda 4:3, oppure centro 4:3 + seconda 3:4) con wipe diagonale e parallasse; hover = riempimento lime del testo.
+- `.manifesto` icone: quattro SVG illustrati a colori (ulivo, casetta, cestino, notte) chiudono le frasi; hover o tocco sull'icona accende in lime la sua frase.
 - `.tappa` (sentiero): nodo quadrato ruotato (legno), tempo in corsivo, testo.
 - `.fisarmonica__voce`: bottone con pulsante a croce che ruota, pannello con transizione su grid-template-rows.

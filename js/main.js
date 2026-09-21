@@ -137,8 +137,18 @@
   /* ── manifesto: le parole si accendono ── */
   function manifesto() {
     const p = q('[data-parole]'); if (!p) return;
-    const parole = p.textContent.trim().split(/\s+/);
-    p.innerHTML = parole.map((w) => `<span class="parola">${w}</span>`).join(' ');
+    const gruppi = qa('.frase', p).length ? qa('.frase', p) : [p];
+    gruppi.forEach((g) => {
+      [...g.childNodes].forEach((n) => {
+        if (n.nodeType !== 3) return;
+        const parole = n.textContent.trim().split(/\s+/).filter(Boolean);
+        if (!parole.length) { n.remove(); return; }
+        const frag = document.createDocumentFragment();
+        parole.forEach((w) => { const sp = document.createElement('span'); sp.className = 'parola'; sp.textContent = w; frag.appendChild(sp); frag.appendChild(document.createTextNode(' ')); });
+        n.replaceWith(frag);
+      });
+      q('.icona', g)?.addEventListener('click', () => g.classList.toggle('is-luce'));
+    });
     if (RIDOTTO) return;
     gsap.to(qa('.parola', p), { color: '#1B2A1E', ease: 'none', stagger: .04, scrollTrigger: { trigger: '.manifesto', start: 'top top', end: '66% bottom', scrub: true } });
   }
@@ -215,14 +225,21 @@
     }
   }
 
-  /* ── le coccole: striscia orizzontale pinnata ── */
-  function extra() {
-    const sez = q('.extra'), striscia = q('.extra__striscia'); if (!sez || RIDOTTO) return;
-    const corsa = () => Math.max(0, striscia.scrollWidth - window.innerWidth + gut());
-    const tween = gsap.to(striscia, { x: () => -corsa(), ease: 'none', scrollTrigger: { trigger: sez, start: 'top top', end: () => `+=${corsa()}`, pin: true, scrub: .6, invalidateOnRefresh: true, anticipatePin: 1 } });
-    qa('.extra__carta img', striscia).forEach((img) => {
-      gsap.fromTo(img, { xPercent: -8 }, { xPercent: 0, ease: 'none', scrollTrigger: { trigger: img.closest('.extra__carta'), containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } });
+  /* ── le coccole: parole di traverso, binari che si allungano, foto sfalsate ── */
+  function coccole() {
+    const voci = qa('.coccole__voce'); if (!voci.length || RIDOTTO) return;
+    voci.forEach((voce, i) => {
+      const parola = q('.coccole__parola > span', voce), binario = q('.coccole__binario', voce);
+      if (!QA) gsap.fromTo(parola, { xPercent: -16, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: voce, start: 'top 80%', once: true } });
+      gsap.fromTo(binario, { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: voce, start: 'top 96%', end: 'bottom 50%', scrub: .5 } });
+      qa('.coccole__foto', voce).forEach((f, k) => {
+        const img = q('img', f);
+        if (!QA) gsap.fromTo(img, { clipPath: 'polygon(0% 0%, 0% 0%, -70% 100%, -70% 100%)' }, { clipPath: 'polygon(0% 0%, 170% 0%, 100% 100%, -70% 100%)', duration: 1.5, ease: 'power3.inOut', scrollTrigger: { trigger: f, start: 'top 90%', once: true } });
+        const ampiezza = (i + k) % 2 ? 9 : 15;
+        gsap.fromTo(f, { yPercent: ampiezza }, { yPercent: -ampiezza, ease: 'none', scrollTrigger: { trigger: voce, start: 'top bottom', end: 'bottom top', scrub: true } });
+      });
     });
+    ST.create({ trigger: '.coccole', start: 'top 80px', end: 'bottom 80px', onToggle: (e) => testata.classList.toggle('is-scura', e.isActive) });
   }
 
   /* ── dintorni: il sentiero si riempie e le tappe si accendono ── */
@@ -268,7 +285,7 @@
 
   /* ── avvio ── */
   const introHero = hero();
-  manifesto(); nidi(); family(); stelle(); nastro(); extra(); dintorni(); voucher(); domande(); piede(); contatori(); reveal();
+  manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); reveal();
   const tlVelo = velo();
   if (RIDOTTO || QA) { html.classList.add('is-pronto'); }
   else { tlVelo.add(() => introHero.play(), 2.3); tlVelo.add(() => html.classList.add('is-pronto'), 3.4); }

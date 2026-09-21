@@ -115,8 +115,12 @@ html.is-menu .testata { color: var(--carta); transform: none; }
 .manifesto { height: 300svh; position: relative; z-index: 1; }
 .manifesto__palco { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: var(--testata-h) clamp(28px, 9vw, 140px) 48px; }
 .manifesto__palco .occhiello { margin-bottom: 1.1em; }
-.manifesto__testo { font: italic clamp(1.7rem, 4vw, 3.8rem)/1.22 var(--serif); max-width: 22ch; margin: 0 auto; color: var(--salvia-chiara); }
-.manifesto__testo .parola { color: inherit; transition: color .25s; }
+.manifesto__testo { font: italic clamp(1.45rem, 3.1vw, 2.9rem)/1.25 var(--serif); max-width: 30ch; margin: 0 auto; color: var(--salvia-chiara); }
+.manifesto__testo .parola { color: inherit; transition: color .25s, text-shadow .25s; }
+.manifesto__testo .frase { display: inline; }
+.manifesto__testo .icona { display: inline-block; width: 1em; height: 1em; vertical-align: -.16em; margin: 0 .2em 0 .14em; cursor: pointer; transition: transform .35s var(--e-out); }
+@media (hover: hover) and (pointer: fine) { .manifesto__testo .icona:hover { transform: scale(1.35) rotate(-8deg); } }
+.manifesto__testo .frase:has(.icona:hover) .parola, .manifesto__testo .frase.is-luce .parola { color: var(--lime) !important; text-shadow: 0 0 22px rgba(160, 176, 40, .45); }
 html.is-ridotto .manifesto__testo { color: var(--inchiostro); }
 
 /* ── il foglio che sale, e i due nidi ── */
@@ -180,19 +184,31 @@ html.is-ridotto .nido__falda { display: none; }
 .nastro__riga i { font-style: normal; color: var(--lime); font-size: .6em; }
 .nastro__riga--contro { color: var(--salvia); }
 
-/* ── le coccole: striscia orizzontale ── */
-.extra { position: relative; z-index: 2; background: var(--carta-2); }
-.extra__pin { height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: clamp(24px, 4vh, 48px); overflow: hidden; padding-left: var(--gut); }
-.extra__testa { max-width: 720px; }
-.extra__testa > p { margin-top: 1em; max-width: 52ch; }
-.extra__striscia { display: flex; gap: clamp(16px, 2vw, 28px); width: max-content; padding-right: var(--gut); will-change: transform; }
-.extra__carta { width: clamp(280px, 30vw, 420px); }
-.extra__carta figure { margin: 0 0 16px; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--r-m); }
-.extra__carta img { width: 120%; max-width: none; height: 100%; object-fit: cover; margin-left: -10%; }
-.extra__prezzo { font: italic 1.1rem var(--serif); color: var(--oliva); }
-.extra__carta h3 { font-size: 1.7rem; margin: .1em 0 .3em; }
-.extra__carta p:last-child { font-size: .98rem; color: var(--inchiostro); }
-@media (max-width: 860px) { .extra__carta { width: 78vw; } .extra__carta h3 { font-size: 1.5rem; } .extra__pin { gap: 20px; } }
+/* ── le coccole: l'indice di traverso (parole a 33°, binari, foto sfalsate) ── */
+.coccole { position: relative; z-index: 2; background: var(--notte); color: var(--carta); padding: clamp(72px, 10vw, 150px) 0 clamp(30px, 5vw, 80px); overflow: hidden; }
+.coccole__testa { padding: 0 var(--gut); margin-bottom: clamp(30px, 5vw, 80px); max-width: 780px; }
+.coccole__testa .occhiello { color: var(--lime); }
+.coccole__testa > p:last-child { margin-top: 1.2em; max-width: 60ch; opacity: .85; }
+.coccole__lista { --passo: clamp(300px, 40vw, 600px); list-style: none; margin: 0; padding: 0; }
+.coccole__voce { position: relative; height: var(--passo); }
+.coccole__parola { position: absolute; left: var(--gut); top: 14%; z-index: 3; display: block; transform: rotate(33deg); transform-origin: 0 0; font: 600 clamp(56px, 9.6vw, 152px)/.9 var(--sans); letter-spacing: -.035em; white-space: nowrap; text-decoration: none; }
+.coccole__parola > span { display: inline-block; padding-right: .08em; background-image: linear-gradient(90deg, var(--lime) 0 50%, var(--carta) 50% 100%); background-size: 210% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; transition: background-position .6s var(--e-out); }
+@media (hover: hover) and (pointer: fine) { .coccole__parola:hover > span { background-position: 0 0; } }
+.coccole__binario { position: absolute; left: -60vw; width: 300vw; bottom: .03em; height: 1.5px; background: var(--carta); transform-origin: 20% 50%; pointer-events: none; z-index: 2; }
+.coccole__foto { position: absolute; z-index: 1; display: block; overflow: hidden; background: rgba(247, 248, 243, .08); }
+.coccole__foto img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--e-out); }
+.coccole__voce--destra .coccole__foto { left: 66%; width: 27%; top: 2%; aspect-ratio: 3 / 4; }
+.coccole__voce--destra .coccole__foto--seconda { left: 39%; width: 22%; top: 60%; aspect-ratio: 4 / 3; }
+.coccole__voce--centro .coccole__foto { left: 35%; width: 30%; top: 44%; aspect-ratio: 4 / 3; }
+.coccole__voce--centro .coccole__foto--seconda { left: 76%; width: 17%; top: 4%; aspect-ratio: 3 / 4; }
+@media (hover: hover) and (pointer: fine) { .coccole__voce:has(.coccole__parola:hover) .coccole__foto img { transform: scale(1.06); } }
+@media (max-width: 700px) {
+  .coccole__lista { --passo: 84vw; }
+  .coccole__parola { font-size: 15.5vw; top: 8%; }
+  .coccole__voce--destra .coccole__foto { left: 57%; width: 38%; top: -2%; }
+  .coccole__voce--centro .coccole__foto { left: 36%; width: 46%; top: 46%; }
+  .coccole__foto--seconda { display: none; }
+}
 
 /* ── dintorni: il sentiero ── */
 .dintorni { padding: var(--sez) var(--gut); position: relative; z-index: 2; background: var(--carta); }
@@ -277,8 +293,7 @@ html.is-ridotto .nido__falda { display: none; }
   .stelle__palco { background: var(--notte); color: var(--carta); padding: var(--sez) var(--gut); min-height: 0; }
   .stelle__dentro, .stelle__foto { position: static; transform: none; margin-top: 32px; }
   .stelle__dentro { color: var(--carta); }
-  .extra__pin { height: auto; padding: var(--sez) var(--gut); }
-  .extra__striscia { width: auto; flex-wrap: wrap; }
+  .coccole__binario { transform: none; }
   .sentiero__barra i { transform: none; }
   .nastro__riga { width: auto; white-space: normal; flex-wrap: wrap; }
   .bottone, .bottone::before, .testata, .voce, .voce img, .nido__foto img, .fisarmonica__pannello { transition: none; }
