@@ -13,6 +13,7 @@
   const vh = () => window.innerHeight;
   html.classList.add('js');
   if (RIDOTTO || QA) html.classList.add('is-statico');
+  if (RIDOTTO) html.classList.add('is-ridotto');
 
   /* ── scroll morbido ── */
   let lenis = null;
@@ -187,15 +188,15 @@
     };
     const accendi = (v) => { if (v === attivo) return; attivo = v; if (v) raf = requestAnimationFrame(disegna); else cancelAnimationFrame(raf); };
     dim(); window.addEventListener('resize', dim, { passive: true });
-    const tl = gsap.timeline({ scrollTrigger: { trigger: sez, start: 'top top', end: 'bottom bottom', scrub: .5, onToggle: (e) => accendi(e.isActive), onUpdate: (e) => { testata.classList.toggle('is-scura', e.progress > .25 && e.progress < .98); } } });
-    tl.to(palco, { backgroundColor: '#0E1A12', ease: 'none', duration: .35 }, 0)
-      .to(dentro, { color: '#F7F8F3', ease: 'none', duration: .35 }, 0)
-      .to(occ, { color: '#A0B028', ease: 'none', duration: .35 }, 0)
-      .to(canvas, { opacity: 1, ease: 'none', duration: .3 }, .18)
-      .fromTo(qa('.riga i', dentro), { yPercent: 110, y: 0 }, { yPercent: 0, y: 0, ease: 'power2.out', duration: .22, stagger: .06 }, .1)
-      .fromTo(q('.stelle__testo', dentro), { opacity: 0, y: 30 }, { opacity: 1, y: 0, ease: 'power2.out', duration: .2 }, .28)
-      .fromTo(foto, { opacity: 0, scale: .82, transformOrigin: '50% 100%' }, { opacity: 1, scale: 1, ease: 'power2.out', duration: .32 }, .3)
-      .fromTo(q('img', foto), { yPercent: 6 }, { yPercent: -6, ease: 'none', duration: .7 }, .3);
+    const tl = gsap.timeline({ scrollTrigger: { trigger: sez, start: 'top top', end: 'bottom bottom', scrub: .5, onToggle: (e) => accendi(e.isActive), onUpdate: (e) => { testata.classList.toggle('is-scura', e.progress > .16 && e.progress < .98); } } });
+    tl.to(palco, { backgroundColor: '#0E1A12', ease: 'none', duration: .24 }, 0)
+      .to(dentro, { color: '#F7F8F3', ease: 'none', duration: .24 }, 0)
+      .to(occ, { color: '#A0B028', ease: 'none', duration: .24 }, 0)
+      .to(canvas, { opacity: 1, ease: 'none', duration: .3 }, .1)
+      .fromTo(qa('.riga i', dentro), { yPercent: 110, y: 0 }, { yPercent: 0, y: 0, ease: 'power2.out', duration: .2, stagger: .05 }, .05)
+      .fromTo(q('.stelle__testo', dentro), { opacity: 0, y: 30 }, { opacity: 1, y: 0, ease: 'power2.out', duration: .18 }, .18)
+      .fromTo(foto, { opacity: 0, scale: .82, transformOrigin: '50% 100%' }, { opacity: 1, scale: 1, ease: 'power2.out', duration: .3 }, .2)
+      .fromTo(q('img', foto), { yPercent: 6 }, { yPercent: -6, ease: 'none', duration: .78 }, .22);
     if (QA) { /* nello stato qa le righe mascherate del titolo restano visibili quando scrubbate */ }
   }
 
