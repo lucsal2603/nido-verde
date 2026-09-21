@@ -112,8 +112,9 @@ html.is-menu .testata { color: var(--carta); transform: none; }
 
 /* ── manifesto ── */
 .manifesto { height: 300svh; position: relative; z-index: 1; }
-.manifesto__palco { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 0 var(--gut); }
-.manifesto__testo { font: italic clamp(1.7rem, 4vw, 3.8rem)/1.22 var(--serif); max-width: 22ch; color: var(--salvia-chiara); }
+.manifesto__palco { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: var(--testata-h) clamp(28px, 9vw, 140px) 48px; }
+.manifesto__palco .occhiello { margin-bottom: 1.1em; }
+.manifesto__testo { font: italic clamp(1.7rem, 4vw, 3.8rem)/1.22 var(--serif); max-width: 22ch; margin: 0 auto; color: var(--salvia-chiara); }
 .manifesto__testo .parola { color: inherit; transition: color .25s; }
 html.is-ridotto .manifesto__testo { color: var(--inchiostro); }
 
