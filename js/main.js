@@ -150,7 +150,12 @@
       q('.icona', g)?.addEventListener('click', () => g.classList.toggle('is-luce'));
     });
     if (RIDOTTO) return;
-    gsap.to(qa('.parola', p), { color: '#1B2A1E', ease: 'none', stagger: .04, scrollTrigger: { trigger: '.manifesto', start: 'top top', end: '66% bottom', scrub: true } });
+    const parole = qa('.parola', p);
+    const totale = .5 + .04 * (parole.length - 1);
+    /* ogni icona si sveglia quando l'evidenziazione raggiunge l'ultima parola della sua frase */
+    const icone = qa('.icona', p).map((el) => { const ultime = qa('.parola', el.closest('.frase')); const idx = parole.indexOf(ultime[ultime.length - 1]); return { el, soglia: (.04 * idx + .25) / totale }; });
+    const tl = gsap.to(parole, { color: '#1B2A1E', ease: 'none', duration: .5, stagger: .04, scrollTrigger: { trigger: '.manifesto', start: 'top top', end: '66% bottom', scrub: true },
+      onUpdate: () => { const pr = tl.progress(); icone.forEach(({ el, soglia }) => el.classList.toggle('is-viva', pr >= soglia)); } });
   }
 
   /* ── i due nidi: le falde del tetto si aprono ── */
