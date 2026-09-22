@@ -43,7 +43,7 @@ Tutto ciò che nella demo non viene da un suo documento è elencato qui (vale pe
 - **Video**: in questa versione non c'è; se Federica manda un video si può mettere nella hero al posto della foto.
 - **Foto**: usate quelle del sito vecchio (le `KB_…`, `TSV…`, `DSCF…` sembrano di fotografi professionisti: chiedere se ci sono vincoli o crediti da citare) e le sue di mail. Due sono screenshot Instagram a bassa risoluzione (cestino con vista lago, bacio sotto il tetto): chiedere gli originali.
 - Una **foto di Federica** da mettere accanto al manifesto «Sono Federica».
-- Recensioni: ora rimandano ad Airbnb, come ha chiesto; se vuole citazioni in pagina servono i testi.
+- Recensioni: in pagina ci sono dodici citazioni vere prese dalle pagine Airbnb il 22/9/2026 (nome di battesimo, mese, nido; le più lunghe sono accorciate a fine frase), con i link alle pagine complete. Chiedere a Federica se vuole avvisare gli ospiti citati o sostituirne qualcuna; tutte quelle raccolte sono in dati/recensioni.json.
 
 ## Per il sito vero (non per la demo)
 

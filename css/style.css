@@ -300,7 +300,17 @@ html.is-ridotto .passi__tappe { display: none; }
 /* ── recensioni ── */
 .voci { padding: var(--sez) var(--gut); background: var(--carta); position: relative; z-index: 2; }
 .voci .titolo-l { max-width: 14ch; }
-.voci__due { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 48px); margin-top: clamp(36px, 5vw, 64px); }
+/* le citazioni vere prese da Airbnb: dodici carte, sei per nido */
+.voci__griglia { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 28px); margin-top: clamp(36px, 5vw, 64px); }
+.citazione { display: flex; flex-direction: column; gap: 18px; padding: clamp(20px, 2.4vw, 32px); border-radius: var(--r-m); background: var(--carta-2); border: 1px solid var(--salvia-chiara); }
+.citazione blockquote { margin: 0; font: 400 1.25rem/1.35 var(--serif); color: var(--inchiostro); }
+.citazione blockquote::before { content: '“'; display: block; font: 400 3rem/.6 var(--serif); color: var(--lime); margin-bottom: .3em; }
+.citazione footer { margin-top: auto; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; font-size: .92rem; color: var(--oliva); }
+.citazione footer b { font-weight: 600; color: var(--inchiostro); }
+.citazione footer .nido { font: italic 1.05rem var(--serif); color: var(--salvia); }
+@media (max-width: 1024px) { .voci__griglia { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .voci__griglia { grid-template-columns: 1fr; } }
+.voci__due { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 48px); margin-top: clamp(28px, 4vw, 48px); }
 .voce { display: grid; grid-template-columns: 1fr 1.2fr; gap: 22px; align-items: center; text-decoration: none; padding: 16px; border-radius: var(--r-m); border: 1px solid var(--salvia-chiara); transition: background var(--d-base), transform var(--d-base) var(--e-out); }
 .voce figure { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--r-s); }
 .voce img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--e-out); }
