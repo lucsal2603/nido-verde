@@ -12,8 +12,15 @@
   --d-veloce: 160ms; --d-base: 320ms; --d-lenta: 640ms;
   --e-out: cubic-bezier(.23, 1, .32, 1); --e-inout: cubic-bezier(.77, 0, .175, 1);
   --testata-h: 84px;
+  --evidenzia: #C9D67A;
 }
 * { box-sizing: border-box; }
+/* evidenziazione del testo e tocco: verdino del sito, mai il blu di sistema */
+::selection { background: var(--evidenzia); color: var(--inchiostro); }
+::-moz-selection { background: var(--evidenzia); color: var(--inchiostro); }
+img::selection { background: rgba(201, 214, 122, .45); }
+.stelle ::selection, .coccole ::selection, .piede ::selection, .menu ::selection, .velo ::selection { background: var(--lime); color: var(--notte); }
+html { -webkit-tap-highlight-color: rgba(160, 176, 40, .35); accent-color: var(--oliva); }
 html { background: var(--carta); color: var(--inchiostro); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 html, body { overflow-x: hidden; overflow-x: clip; }
 body { margin: 0; font-family: var(--sans); font-size: 17px; line-height: 1.55; font-weight: 400; -webkit-font-smoothing: antialiased; }
