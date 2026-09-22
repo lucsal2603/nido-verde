@@ -26,6 +26,21 @@
   }
   const vaiA = (el) => { if (lenis) lenis.scrollTo(el, { offset: -72, duration: 1.4 }); else el.scrollIntoView({ behavior: RIDOTTO ? 'auto' : 'smooth' }); };
 
+  /* ── ricarica: si riparte da dove si era (sessionStorage: dura finché la scheda resta aperta); una visita nuova parte dall'alto ── */
+  const NAV = performance.getEntriesByType?.('navigation')[0]?.type || 'navigate';
+  let scrollSalvato = 0;
+  try { scrollSalvato = parseInt(sessionStorage.getItem('nido:scroll') || '0', 10) || 0; } catch (e) { /* storage negato */ }
+  const RIPRISTINO = !location.hash && (NAV === 'reload' || NAV === 'back_forward') && scrollSalvato > 40;
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (!RIPRISTINO) { try { sessionStorage.removeItem('nido:scroll'); } catch (e) { /* niente */ } }
+  let ultimoSalvataggio = 0;
+  const salvaScroll = (forza) => {
+    const ora = Date.now(); if (!forza && ora - ultimoSalvataggio < 150) return; ultimoSalvataggio = ora;
+    try { sessionStorage.setItem('nido:scroll', String(Math.round(window.scrollY))); } catch (e) { /* niente */ }
+  };
+  window.addEventListener('scroll', () => salvaScroll(false), { passive: true });
+  window.addEventListener('pagehide', () => salvaScroll(true));
+
   /* ── menu mobile ── */
   const menu = q('#menu'), menuBottone = q('#menuBottone');
   let menuAperto = false;
@@ -98,7 +113,7 @@
   function velo() {
     const v = q('#velo');
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    if (!v || RIDOTTO || QA) { v?.remove(); return tl; }
+    if (!v || RIDOTTO || QA || RIPRISTINO) { v?.remove(); return tl; }   /* chi ricarica non rivede il velo */
     lenis?.stop(); html.classList.add('is-velato');
     const tratti = qa('.velo__tratto', v);
     tratti.forEach((p) => { const l = p.getTotalLength(); p.style.strokeDasharray = l; p.style.strokeDashoffset = l; });
@@ -336,8 +351,21 @@
   const introHero = hero();
   manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); reveal();
   const tlVelo = velo();
-  if (RIDOTTO || QA) { html.classList.add('is-pronto'); }
+  if (RIDOTTO || QA || RIPRISTINO) { html.classList.add('is-pronto'); if (RIPRISTINO) introHero?.progress(1); }
   else { tlVelo.add(() => introHero.play(), 2.3); tlVelo.add(() => html.classList.add('is-pronto'), 3.4); }
   window.addEventListener('load', () => ST.refresh());
   document.fonts?.ready.then(() => ST.refresh());
+  if (RIPRISTINO) {
+    /* torno al punto salvato appena la pagina ha le sue misure (subito, al load e dopo i font), finché la persona non tocca lo scroll */
+    let toccato = false;
+    ['wheel', 'touchstart', 'keydown'].forEach((ev) => window.addEventListener(ev, () => { toccato = true; }, { passive: true, once: true }));
+    const torna = () => {
+      if (toccato) return; ST.refresh();
+      if (lenis) lenis.scrollTo(scrollSalvato, { immediate: true, force: true }); else window.scrollTo(0, scrollSalvato);
+      ST.update();
+    };
+    torna();
+    window.addEventListener('load', () => { torna(); setTimeout(torna, 250); });
+    document.fonts?.ready.then(() => setTimeout(torna, 60));
+  }
 })();
