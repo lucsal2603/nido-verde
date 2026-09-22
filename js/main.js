@@ -142,14 +142,13 @@
     const mm = gsap.matchMedia();
     mm.add({ desk: '(min-width: 861px)', mob: '(max-width: 860px)' }, (ctx) => {
       const { desk } = ctx.conditions;
+      /* su telefono la foto resta intera a tutto schermo, senza casetta né blocco: solo la testata che si scurisce finché l'hero è in vista */
+      if (!desk) { ST.create({ trigger: sez, start: 'top bottom', end: 'bottom 80px', onToggle: (e) => testata.classList.toggle('is-scura', e.isActive), onRefresh: (e) => testata.classList.toggle('is-scura', e.isActive) }); return; }
       const timpano = 'polygon(0 32%, 50% 0, 100% 32%, 100% 100%, 0 100%)';
       const tl = gsap.timeline({ scrollTrigger: { trigger: sez, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true, onUpdate: (e) => { const chiara = e.progress > .42; sez.classList.toggle('is-chiara', chiara); testata.classList.toggle('is-scura', !chiara); } } });
-      if (desk) tl.to(foto, { scale: .46, x: () => -gut(), y: () => -vh() * .04, transformOrigin: '100% 50%', clipPath: timpano, ease: 'none' }, 0);
-      /* su telefono la foto non si rimpicciolisce: si ritaglia in una casetta piccola e ben proporzionata in alto, sotto la testata, e il titolo resta sotto */
-      else tl.to(foto, { scale: 1, x: 0, y: 0, clipPath: 'polygon(17% 21.6%, 50% 12%, 83% 21.6%, 83% 44%, 17% 44%)', ease: 'none' }, 0);
-      if (!desk) tl.fromTo(q('img', foto), { yPercent: 0 }, { yPercent: -24, ease: 'none' }, 0);   /* la foto sale dentro la finestra: nella casetta resta il lago, non il cielo */
+      tl.to(foto, { scale: .46, x: () => -gut(), y: () => -vh() * .04, transformOrigin: '100% 50%', clipPath: timpano, ease: 'none' }, 0);
       tl.to(foto, { '--scrim': 0, ease: 'none', duration: .5 }, 0);
-      tl.fromTo(testo, { y: 0 }, { y: () => (desk ? 0 : -vh() * .02), ease: 'none' }, 0);
+      tl.fromTo(testo, { y: 0 }, { y: 0, ease: 'none' }, 0);
     });
     return intro;
   }

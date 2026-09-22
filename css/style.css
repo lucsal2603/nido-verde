@@ -114,7 +114,7 @@ html.is-menu .testata { color: var(--carta); transform: none; }
 @media (hover: hover) { .hero:not(.is-chiara) .hero__azioni .bottone:hover { color: var(--inchiostro); } }
 .hero:not(.is-chiara) .hero__azioni .bottone--pieno { background: var(--bianco); color: var(--inchiostro); }
 .hero:not(.is-chiara) .hero__azioni .bottone--pieno::before { background: var(--lime); }
-@media (max-width: 860px) { .hero__testo { bottom: 24px; } .hero__sotto { font-size: 1rem; } }
+@media (max-width: 860px) { .hero { height: 100svh; } .hero__testo { bottom: 24px; } .hero__sotto { font-size: 1rem; } }   /* su telefono l'hero è una schermata sola, con la foto intera */
 
 /* ── manifesto ── */
 .manifesto { height: 300svh; position: relative; z-index: 1; }
