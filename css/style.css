@@ -310,7 +310,7 @@ html.is-ridotto .passi__tappe { display: none; }
 .citazione footer .nido { font: italic 1.05rem var(--serif); color: var(--salvia); }
 @media (max-width: 1024px) { .voci__griglia { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 640px) { .voci__griglia { grid-template-columns: 1fr; } }
-.voci__due { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 48px); margin-top: clamp(28px, 4vw, 48px); }
+.voci__due { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 48px); margin-top: clamp(84px, 9vw, 150px); }   /* le carte inclinate alzano gli angoli: più aria sopra */
 .voce { position: relative; display: grid; grid-template-columns: 1fr 1.2fr; gap: 22px; align-items: center; text-decoration: none; padding: 16px; border-radius: var(--r-m); border: 1px solid var(--salvia-chiara); background: var(--carta-2); box-shadow: 0 14px 34px -22px rgba(27, 42, 30, .35); will-change: transform; transition: background var(--d-base) var(--e-out); }
 .voce figure { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--r-s); }
 .voce img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--e-out); }
