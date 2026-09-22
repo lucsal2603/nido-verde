@@ -256,6 +256,8 @@
   /* ── nastro con lo skew dalla velocità ── */
   function nastro() {
     const righeN = qa('[data-nastro]'); if (!righeN.length || RIDOTTO) return;
+    /* su telefono il nastro è scuro come le stelle e le coccole: la testata resta chiara anche lì */
+    if (window.matchMedia('(max-width: 860px)').matches) ST.create({ trigger: '.nastro', start: 'top 80px', end: 'bottom 80px', onToggle: (e) => testata.classList.toggle('is-scura', e.isActive) });
     righeN.forEach((r) => {
       r.innerHTML += r.innerHTML;
       const contro = r.dataset.nastro === 'contro';
