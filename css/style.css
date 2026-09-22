@@ -430,7 +430,10 @@ html.is-ridotto .dintorni__azioni { position: static; }
 @media (max-width: 860px) {
   .stelle { background: var(--notte); }
   .stelle__palco { height: 100lvh; }
-  .stelle__foto { width: min(62vw, calc((100svh - 460px) * .75)); left: 50%; right: auto; transform: translateX(-50%); top: calc(var(--testata-h) + 16px); }
+  .stelle__foto { aspect-ratio: 1 / 1; width: min(84vw, calc(100svh - 480px)); left: 50%; right: auto; transform: translateX(-50%); top: calc(var(--testata-h) + 12px); }   /* casetta grande e centrata */
+  .stelle__dentro { bottom: calc(100lvh - 100svh + 36px); right: var(--gut); padding-right: 0; }   /* sopra la barra del browser: l'ultima riga non finisce fuori */
+  .stelle__dentro .titolo-xl { font-size: clamp(2.3rem, 10.5vw, 3.2rem); }
+  .stelle__testo { font-size: .95rem; margin-top: 1em; }
   .nastro { background: var(--notte); color: var(--carta); border-color: rgba(247, 248, 243, .18); }
   .nastro__riga--contro { color: var(--salvia-chiara); }
   .citazione:nth-child(n + 4) { display: none; }
