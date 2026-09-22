@@ -186,7 +186,7 @@
     const sez = q('.stelle'); if (!sez || RIDOTTO) return;
     const palco = q('.stelle__palco', sez), dentro = q('.stelle__dentro', sez), foto = q('.stelle__foto', sez), canvas = q('.stelle__cielo', sez), occ = q('.occhiello', dentro);
     const ctx = canvas.getContext('2d');
-    let stelleArr = [], attivo = false, raf = 0;
+    let stelleArr = [], attivo = false, raf = 0, cadenti = [], prossima = 0, tPrima = 0;
     const dim = () => {
       const r = palco.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
       canvas.width = Math.round(r.width * dpr); canvas.height = Math.round(r.height * dpr);
@@ -199,6 +199,24 @@
         const a = .3 + .7 * Math.abs(Math.sin(t * .0012 * s.s + s.f));
         ctx.globalAlpha = a; ctx.fillStyle = s.lime ? '#A0B028' : '#F7F8F3';
         ctx.beginPath(); ctx.arc(s.x * w, s.y * h, s.r * dpr, 0, Math.PI * 2); ctx.fill();
+      }
+      /* stelle cadenti: ogni tanto una scia attraversa un pezzo di cielo e si spegne */
+      const dt = Math.min(50, tPrima ? t - tPrima : 16); tPrima = t;
+      if (t >= prossima) {
+        prossima = t + 2200 + Math.random() * 4300;
+        const verso = Math.random() < .7 ? 1 : -1, ang = (18 + Math.random() * 20) * Math.PI / 180, v = (.7 + Math.random() * .45) * dpr;
+        cadenti.push({ x: (verso > 0 ? .05 + Math.random() * .5 : .45 + Math.random() * .5) * w, y: (.04 + Math.random() * .42) * h, vx: Math.cos(ang) * v * verso, vy: Math.sin(ang) * v, len: (110 + Math.random() * 130) * dpr, vita: 700 + Math.random() * 450, eta: 0 });
+      }
+      cadenti = cadenti.filter((c) => c.eta < c.vita);
+      for (const c of cadenti) {
+        c.eta += dt; c.x += c.vx * dt; c.y += c.vy * dt;
+        const k = c.eta / c.vita, a = k < .15 ? k / .15 : 1 - (k - .15) / .85;
+        const n = Math.hypot(c.vx, c.vy) || 1, tx = c.x - c.vx / n * c.len, ty = c.y - c.vy / n * c.len;
+        const g = ctx.createLinearGradient(c.x, c.y, tx, ty);
+        g.addColorStop(0, `rgba(247, 248, 243, ${a.toFixed(3)})`); g.addColorStop(1, 'rgba(247, 248, 243, 0)');
+        ctx.globalAlpha = 1; ctx.strokeStyle = g; ctx.lineWidth = 1.6 * dpr; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(c.x, c.y); ctx.lineTo(tx, ty); ctx.stroke();
+        ctx.fillStyle = `rgba(255, 255, 255, ${a.toFixed(3)})`; ctx.beginPath(); ctx.arc(c.x, c.y, 1.8 * dpr, 0, Math.PI * 2); ctx.fill();
       }
       ctx.globalAlpha = 1;
       if (attivo) raf = requestAnimationFrame(disegna);
