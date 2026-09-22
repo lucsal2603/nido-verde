@@ -295,6 +295,9 @@
     if (RIDOTTO) { html.classList.add('is-ridotto'); return; }
     root.style.height = `${(N + 1) * 60}svh`;
     const fisso = q('.passi__fisso', root), scena = q('.passi__scena', root);
+    /* su telefono la testata «Dintorni / Cosa visitare» entra nel blocco fisso e resta a schermo per tutte le tappe; su computer resta sopra e scorre via */
+    const testaSez = q('.dintorni__testa');
+    if (testaSez) gsap.matchMedia().add('(max-width: 860px)', () => { fisso.prepend(testaSez); ST.refresh(); return () => { root.before(testaSez); ST.refresh(); }; });
     gsap.set(passi[0], { autoAlpha: 1 }); gsap.set(omini[0], { autoAlpha: 1 });
     /* la barra parte da translateX(-100%) nel CSS: GSAP la leggerebbe in pixel, quindi si azzera x e si lavora solo in percentuale */
     gsap.set(barre, { xPercent: -100, x: 0 });
