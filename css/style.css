@@ -203,7 +203,7 @@ html.is-ridotto .nido__falda { display: none; }
 .coccole__testa > p:last-child { margin-top: 1.2em; max-width: 60ch; opacity: .85; }
 .coccole__lista { --passo: clamp(300px, 40vw, 600px); list-style: none; margin: 0; padding: 0; }
 .coccole__voce { position: relative; height: var(--passo); }
-.coccole__parola { position: absolute; left: var(--gut); top: 14%; z-index: 3; display: block; transform: rotate(33deg); transform-origin: 0 0; font: 600 clamp(56px, 9.6vw, 152px)/.9 var(--sans); letter-spacing: -.035em; white-space: nowrap; text-decoration: none; }
+.coccole__parola { position: absolute; left: var(--gut); top: 14%; z-index: 3; display: block; transform: rotate(33deg); transform-origin: 0 0; font: 400 clamp(56px, 9.6vw, 152px)/.9 var(--serif); letter-spacing: -.025em; white-space: nowrap; text-decoration: none; }
 .coccole__parola > span { display: inline-block; padding-right: .08em; background-image: linear-gradient(90deg, var(--lime) 0 50%, var(--carta) 50% 100%); background-size: 210% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; transition: background-position .6s var(--e-out); }
 @media (hover: hover) and (pointer: fine) { .coccole__parola:hover > span { background-position: 0 0; } }
 .coccole__binario { position: absolute; left: -60vw; width: 300vw; bottom: .03em; height: 1.5px; background: var(--carta); transform-origin: 20% 50%; pointer-events: none; z-index: 2; }
@@ -237,8 +237,8 @@ html.is-ridotto .nido__falda { display: none; }
 .passi__riga { display: flex; gap: 5rem; height: 65svh; align-items: stretch; }
 .passi__testi { flex: 1; position: relative; }
 .passo { position: absolute; inset: 0 0 auto 32px; display: flex; flex-direction: column; gap: 1.5rem; opacity: 0; visibility: hidden; }
-.passo__titolo { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem; margin: 0; font: 600 clamp(2rem, 3.4vw, 3rem)/1.2 var(--sans); letter-spacing: .4px; color: var(--carta); }
-.passo__corsivo { font: italic clamp(2rem, 3.4vw, 3rem)/1.2 var(--serif); color: #fff; }
+.passo__titolo { display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem; margin: 0; font: 400 clamp(2.2rem, 3.8vw, 3.4rem)/1.05 var(--serif); letter-spacing: -.02em; color: var(--carta); }
+.passo__corsivo { font: italic clamp(2.2rem, 3.8vw, 3.4rem)/1.05 var(--serif); color: #fff; }
 .passo__testo { font-size: 18px; line-height: 1.4; color: var(--salvia-chiara); max-width: 60ch; }
 .passo__lista { margin: 0; padding-left: 30px; color: var(--salvia-chiara); font-size: 16px; }
 .passi__scena { flex: 1; position: relative; border-radius: 1.875rem; }
@@ -265,7 +265,7 @@ html.is-ridotto .nido__falda { display: none; }
   .passi__omino--bici picture { height: 84%; }
   .passi__testi { flex: 1; }
   .passo { inset: 0 0 auto 0; gap: 1rem; }
-  .passo__titolo, .passo__corsivo { font-size: clamp(1.6rem, 6.4vw, 2rem); }
+  .passo__titolo, .passo__corsivo { font-size: clamp(1.8rem, 7vw, 2.3rem); }
   .passo__testo { font-size: 16px; }
   .passi__tappe { padding: 0; margin-top: 1.25rem; }
   .passi__forma { width: 18px; height: 18px; }
