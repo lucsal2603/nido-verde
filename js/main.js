@@ -11,6 +11,7 @@
   const qa = (s, r = document) => [...r.querySelectorAll(s)];
   const gut = () => Math.min(72, Math.max(20, window.innerWidth * .05));
   const vh = () => window.innerHeight;
+  const clamp01 = gsap.utils.clamp(0, 1);
   html.classList.add('js');
   if (RIDOTTO || QA) html.classList.add('is-statico');
   if (RIDOTTO) html.classList.add('is-ridotto');
@@ -267,14 +268,35 @@
     ST.create({ trigger: '.coccole', start: 'top 80px', end: 'bottom 80px', onToggle: (e) => testata.classList.toggle('is-scura', e.isActive) });
   }
 
-  /* ── dintorni: il sentiero si riempie e le tappe si accendono ── */
+  /* ── dintorni: la sezione a passi: un passo per volta, l'omino a destra, tappe e barre sotto ── */
   function dintorni() {
-    const s = q('.sentiero'); if (!s || RIDOTTO) return;
-    gsap.fromTo(q('.sentiero__barra i', s), { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: s, start: 'top 72%', end: 'bottom 72%', scrub: true } });
-    qa('.tappa', s).forEach((t) => {
-      ST.create({ trigger: t, start: 'top 72%', onEnter: () => t.classList.add('is-accesa'), onLeaveBack: () => t.classList.remove('is-accesa') });
-      const testo = q('.tappa__testo', t);
-      if (!QA) gsap.fromTo(testo, { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: t, start: 'top 85%', once: true } });
+    const root = q('[data-passi]'); if (!root) return;
+    const passi = qa('[data-passo]', root), tappe = qa('[data-tappa]', root), omini = qa('.passi__omino', root), barre = tappe.map((t) => q('.passi__barra i', t));
+    const N = passi.length; let attivo = -1;
+    ST.create({ trigger: '.dintorni', start: 'top 80px', end: 'bottom 80px', onToggle: (e) => testata.classList.toggle('is-scura', e.isActive) });
+    if (RIDOTTO) { html.classList.add('is-ridotto'); return; }
+    root.style.height = `${(N + 1) * 60}svh`;
+    const fisso = q('.passi__fisso', root);
+    gsap.set(passi[0], { autoAlpha: 1 }); gsap.set(omini[0], { autoAlpha: 1 });
+    /* la barra parte da translateX(-100%) nel CSS: GSAP la leggerebbe in pixel, quindi si azzera x e si lavora solo in percentuale */
+    gsap.set(barre, { xPercent: -100, x: 0 });
+    const attiva = (k) => {
+      if (k === attivo) return;
+      const prima = attivo; attivo = k;
+      if (prima >= 0) gsap.to(passi[prima], { autoAlpha: 0, duration: .3, ease: 'power2.in', overwrite: true });
+      gsap.fromTo(passi[k], { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: .55, ease: 'power2.out', delay: prima >= 0 ? .2 : 0, overwrite: true });
+      omini.forEach((o, i) => gsap.to(o, { autoAlpha: i === k % 2 ? 1 : 0, duration: .45, ease: 'power2.inOut', overwrite: true }));
+      tappe.forEach((t, i) => { t.classList.toggle('is-attiva', i === k); t.classList.toggle('is-fatta', i <= k); });
+    };
+    attiva(0);
+    ST.create({
+      trigger: root, start: 'top 15%', end: () => `+=${Math.max(1, root.offsetHeight - fisso.offsetHeight)}`, invalidateOnRefresh: true,
+      onUpdate: (e) => {
+        const u = e.progress * (N + 1), k = Math.min(N - 1, Math.floor(u));
+        attiva(k);
+        barre.forEach((b, i) => { const f = clamp01((u - i) / (i === N - 1 ? 2 : 1)); gsap.set(b, { xPercent: -100 + f * 100, x: 0 }); });
+      },
+      onRefresh: (e) => { const u = e.progress * (N + 1); attiva(Math.min(N - 1, Math.floor(u))); },
     });
   }
 

@@ -222,18 +222,61 @@ html.is-ridotto .nido__falda { display: none; }
   .coccole__foto--seconda { display: none; }
 }
 
-/* ── dintorni: il sentiero ── */
-.dintorni { padding: var(--sez) var(--gut); position: relative; z-index: 2; background: var(--carta); }
-.sentiero { position: relative; max-width: 760px; padding-left: 44px; }
-.sentiero__barra { position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: var(--salvia-chiara); }
-.sentiero__barra i { position: absolute; inset: 0; background: var(--oliva); transform: scaleY(0); transform-origin: 50% 0; }
-.sentiero__tappe { list-style: none; margin: 0; padding: 0; }
-.tappa { position: relative; margin-bottom: clamp(40px, 6vw, 72px); }
-.tappa__nodo { position: absolute; left: -44px; top: .45em; width: 14px; height: 14px; background: var(--salvia-chiara); transform: rotate(45deg); transition: background .45s var(--e-out), transform .45s var(--e-out); }
-.tappa.is-accesa .tappa__nodo { background: var(--legno); transform: rotate(45deg) scale(1.25); }
-.tappa__tempo { font: italic 1.1rem var(--serif); color: var(--salvia); margin-bottom: .2em; }
-.tappa__testo p:last-child { max-width: 52ch; margin-top: .4em; }
-.dintorni__azioni { margin-top: clamp(28px, 4vw, 48px); }
+/* ── dintorni: la sezione a passi (clonata da funtownstudio.com): testi a sinistra, omino a destra, tappe sotto ── */
+.dintorni { position: relative; z-index: 2; background: var(--notte); color: var(--carta); padding: clamp(96px, 11vw, 156px) 0; overflow: clip; }
+.dintorni__grana { position: absolute; inset: 0; pointer-events: none; opacity: .05; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"); background-size: 220px 220px; }
+.dintorni__testa { padding: 0 var(--gut); margin-bottom: clamp(24px, 4vw, 56px); position: relative; }
+.dintorni__testa .occhiello { color: var(--lime); }
+.dintorni__testa .sezione__intro { color: var(--salvia-chiara); }
+.dintorni .bottone { border-color: var(--lime); color: var(--lime); }
+.dintorni .bottone::before { background: var(--lime); }
+@media (hover: hover) and (pointer: fine) { .dintorni .bottone:hover { color: var(--notte); } }
+.dintorni__azioni { padding: 0 var(--gut); margin-top: clamp(28px, 4vw, 48px); position: relative; }
+.passi { position: relative; height: 420svh; }
+.passi__fisso { position: sticky; top: 15svh; width: 98vw; margin: 0 auto; }
+.passi__riga { display: flex; gap: 5rem; height: 65svh; align-items: stretch; }
+.passi__testi { flex: 1; position: relative; }
+.passo { position: absolute; inset: 0 0 auto 32px; display: flex; flex-direction: column; gap: 1.5rem; opacity: 0; visibility: hidden; }
+.passo__titolo { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem; margin: 0; font: 600 clamp(2rem, 3.4vw, 3rem)/1.2 var(--sans); letter-spacing: .4px; color: var(--carta); }
+.passo__corsivo { font: italic clamp(2rem, 3.4vw, 3rem)/1.2 var(--serif); color: #fff; }
+.passo__testo { font-size: 18px; line-height: 1.4; color: var(--salvia-chiara); max-width: 60ch; }
+.passo__lista { margin: 0; padding-left: 30px; color: var(--salvia-chiara); font-size: 16px; }
+.passi__scena { flex: 1; position: relative; border-radius: 1.875rem; }
+.passi__omino { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; }
+.passi__omino picture { display: block; height: 78%; }
+.passi__omino img { height: 100%; width: auto; }
+.passi__omino--b img { transform: scaleX(-1); }
+.passi__tappe { display: flex; padding: 0 32px; margin-top: 2rem; }
+.passi__tappa { display: flex; flex-direction: column; align-items: flex-start; width: 10%; margin-right: 2%; transition: width .5s var(--e-inout); }
+.passi__tappa:last-child { margin-right: 0; }
+.passi__tappa.is-attiva { width: 40%; }
+.passi__forma { display: block; width: 22px; height: 22px; color: #2B3B2F; transition: color .5s; }
+.passi__forma svg { display: block; width: 100%; height: 100%; fill: currentColor; }
+.passi__tappa.is-fatta .passi__forma { color: var(--lime); }
+.passi__barra { display: block; width: 100%; height: 3px; margin-top: 9px; background: #050505; overflow: hidden; }
+.passi__barra i { display: block; width: 100%; height: 3px; background: var(--carta); transform: translateX(-100%); }
+@media (max-width: 860px) {
+  .passi { height: 420svh; }
+  .passi__fisso { top: 10svh; width: calc(100vw - 32px); }
+  .passi__riga { flex-direction: column; gap: 1.25rem; height: 72svh; }
+  .passi__scena { flex: 0 0 30svh; order: -1; }
+  .passi__omino picture { height: 92%; }
+  .passi__testi { flex: 1; }
+  .passo { inset: 0 0 auto 0; gap: 1rem; }
+  .passo__titolo, .passo__corsivo { font-size: clamp(1.6rem, 6.4vw, 2rem); }
+  .passo__testo { font-size: 16px; }
+  .passi__tappe { padding: 0; margin-top: 1.25rem; }
+  .passi__forma { width: 18px; height: 18px; }
+}
+/* con "riduci movimento" i passi stanno uno sotto l'altro, senza scorrimento fisso */
+html.is-ridotto .passi { height: auto; }
+html.is-ridotto .passi__fisso { position: static; width: auto; padding: 0 var(--gut); }
+html.is-ridotto .passi__riga { height: auto; }
+html.is-ridotto .passi__testi { display: grid; gap: 40px; }
+html.is-ridotto .passo { position: static; opacity: 1; visibility: visible; }
+html.is-ridotto .passi__scena { min-height: 300px; }
+html.is-ridotto .passi__omino--a { opacity: 1; visibility: visible; }
+html.is-ridotto .passi__tappe { display: none; }
 
 /* ── voucher ── */
 .voucher { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 96px); align-items: center; padding: var(--sez) var(--gut); background: var(--carta-2); position: relative; z-index: 2; }
