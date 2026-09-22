@@ -13,6 +13,7 @@ Tutto ciò che nella demo non viene da un suo documento è elencato qui (vale pe
 | Dintorni | Le sei tappe con i tempi a piedi | Dalla sua guida; «i cugini di Federica» viene dalla guida (az. agricola Pozzo). |
 | Schede dei nidi | Descrizioni e liste di cosa è incluso | Riassunte da brochure e presentazione; da rileggere. |
 | Le coccole | «Torta e barbecue: … bbq con legna o carbonella» | Il modulo dice che il barbecue è **solo per la Starsbox** (Nido 1000 stelle): aggiungere la precisazione se vuole. |
+| Popup di benvenuto | «Due casette, un lago, una notte.» + due righe | Testo mio; appare alla prima visita e poi ogni quattro visite. Da decidere con Federica se tenerlo e con quale messaggio (per esempio il voucher). |
 | Finestra Voucher | «il voucher arriva pronto da stampare o da inoltrare» | Procedura inventata: come lo consegna davvero? |
 | Finestra Prenota | «i dati arrivano insieme alla conferma» | L'IBAN del modulo non è pubblicato di proposito. |
 | Domande frequenti | Le 10 risposte | Derivate dal modulo e dal PDF EXTRA; confermare una per una (soprattutto meteo, cancellazioni, pagamento). |
@@ -43,12 +44,12 @@ Tutto ciò che nella demo non viene da un suo documento è elencato qui (vale pe
 - **Video**: in questa versione non c'è; se Federica manda un video si può mettere nella hero al posto della foto.
 - **Foto**: usate quelle del sito vecchio (le `KB_…`, `TSV…`, `DSCF…` sembrano di fotografi professionisti: chiedere se ci sono vincoli o crediti da citare) e le sue di mail. Due sono screenshot Instagram a bassa risoluzione (cestino con vista lago, bacio sotto il tetto): chiedere gli originali.
 - Una **foto di Federica** da mettere accanto al manifesto «Sono Federica».
-- Recensioni: in pagina ci sono dodici citazioni vere prese dalle pagine Airbnb il 22/9/2026 (nome di battesimo, mese, nido; le più lunghe sono accorciate a fine frase), con i link alle pagine complete. Chiedere a Federica se vuole avvisare gli ospiti citati o sostituirne qualcuna; tutte quelle raccolte sono in dati/recensioni.json.
+- Recensioni: in pagina ci sono sei citazioni vere prese dalle pagine Airbnb il 22/9/2026 (tre per nido, nome di battesimo, mese, nido; le più lunghe sono accorciate a fine frase; su telefono se ne vedono tre), con i link alle pagine complete. Chiedere a Federica se vuole avvisare gli ospiti citati o sostituirne qualcuna; tutte quelle raccolte sono in dati/recensioni.json.
 
 ## Per il sito vero (non per la demo)
 
-- Togliere `noindex`, `robots.txt`, aggiungere sitemap, dati strutturati (LodgingBusiness), privacy e cookie (ora non c'è nessun tracciamento né mappa esterna).
-- Mappa per arrivare: da decidere (Google Maps richiede consenso; alternativa immagine + link).
+- Togliere `noindex`, `robots.txt`, aggiungere sitemap, dati strutturati (LodgingBusiness). La pagina privacy e cookie c'è (bozza da far verificare); non c'è nessun tracciamento.
+- Mappa: c'è, Google Maps in fondo alla pagina Prenota, si carica solo al clic così non servono cookie di terzi prima del consenso.
 - Il carattere arriva da Google Fonts: per il sito vero valutare il self-hosting.
 
 - Footer e privacy (22/9/2026): il footer riporta CIR, CIN e P. IVA presi dal materiale e da Airbnb (CIN IT096080B5XIX23IKI, lo stesso sui due annunci); `privacy.html` è una bozza scritta da noi: far confermare a Federica la ragione sociale esatta (titolare "Il Nido tra gli Ulivi di Federica Poma"?), se ha una PEC, e far leggere il testo a chi la segue per le pratiche prima di andare online.
