@@ -120,12 +120,14 @@
       intro.fromTo(rigaHero, { yPercent: 110, y: 0 }, { yPercent: 0, y: 0, duration: 1.1, stagger: .12 }, 0)
         .to(qa('[data-sale]', sez), { opacity: 1, y: 0, duration: .9, stagger: .1 }, .35);
     }
-    if (RIDOTTO) return intro;
+    /* finché la foto è a tutto schermo la testata è chiara, come il testo dell'hero */
+    testata.classList.add('is-scura');
+    if (RIDOTTO) { ST.create({ trigger: sez, start: 'top top', end: 'bottom 80px', onToggle: (e) => testata.classList.toggle('is-scura', e.isActive), onRefresh: (e) => testata.classList.toggle('is-scura', e.isActive) }); return intro; }
     const mm = gsap.matchMedia();
     mm.add({ desk: '(min-width: 861px)', mob: '(max-width: 860px)' }, (ctx) => {
       const { desk } = ctx.conditions;
       const timpano = 'polygon(0 32%, 50% 0, 100% 32%, 100% 100%, 0 100%)';
-      const tl = gsap.timeline({ scrollTrigger: { trigger: sez, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true, onUpdate: (e) => sez.classList.toggle('is-chiara', e.progress > .42) } });
+      const tl = gsap.timeline({ scrollTrigger: { trigger: sez, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true, onUpdate: (e) => { const chiara = e.progress > .42; sez.classList.toggle('is-chiara', chiara); testata.classList.toggle('is-scura', !chiara); } } });
       if (desk) tl.to(foto, { scale: .46, x: () => -gut(), y: () => -vh() * .04, transformOrigin: '100% 50%', clipPath: timpano, ease: 'none' }, 0);
       else tl.to(foto, { scale: .7, x: 0, y: () => -vh() * .08, transformOrigin: '50% 0%', clipPath: timpano, ease: 'none' }, 0);
       tl.to(foto, { '--scrim': 0, ease: 'none', duration: .5 }, 0);
