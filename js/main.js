@@ -391,7 +391,6 @@
   /* ── piede: il marchio sale ── */
   function piede() {
     if (RIDOTTO) return;
-    gsap.fromTo('[data-marchio]', { yPercent: 55 }, { yPercent: 0, ease: 'none', scrollTrigger: { trigger: '.piede', start: 'top bottom', end: 'bottom bottom', scrub: true } });
     ST.create({ trigger: '.piede', start: 'top 80px', end: 'bottom top', onToggle: (e) => testata.classList.toggle('is-scura', e.isActive) });
   }
 

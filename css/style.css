@@ -376,10 +376,18 @@ html.is-menu .wa { opacity: 0; pointer-events: none; }
 
 /* ── piede ── */
 .piede { background: var(--oliva); color: var(--carta); padding: clamp(40px, 6vw, 80px) var(--gut) 28px; position: relative; z-index: 2; overflow: hidden; }
-.piede__marchio { font: italic clamp(5.4rem, 21vw, 22rem)/.85 var(--serif); letter-spacing: -.03em; overflow: hidden; margin: 0 0 24px -.04em; }
-.piede__marchio span { display: block; }
-.piede__legale { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: .82rem; opacity: .85; border-top: 1px solid rgba(247, 248, 243, .3); padding-top: 18px; }
-.piede__legale a { color: inherit; }
+.piede__griglia { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: clamp(28px, 4vw, 64px); padding-bottom: clamp(36px, 5vw, 64px); font-size: .95rem; line-height: 1.5; }
+.piede__colonna p { margin: 0 0 .9em; max-width: 34ch; }
+.piede__titolo { font: italic 1.35rem/1.2 var(--serif); color: var(--lime); margin-bottom: 1em !important; }
+.piede__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: .45em; }
+.piede a { color: inherit; text-decoration: none; }
+.piede__lista a { display: inline-block; transition: color .3s, transform .35s var(--e-out); }
+@media (hover: hover) { .piede__lista a:hover { color: var(--lime); transform: translateX(6px); } }
+.piede__legale { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: .82rem; opacity: .85; border-top: 1px solid rgba(247, 248, 243, .3); padding: 18px 88px 0 0; }   /* a destra resta libero il posto del pulsante WhatsApp */
+.piede__legale p { margin: 0; }
+.piede__legale a { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 860px) { .piede__griglia { grid-template-columns: 1fr 1fr; gap: 28px 20px; } }
+@media (max-width: 560px) { .piede__griglia { grid-template-columns: 1fr; } }
 
 /* ── moto ridotto ── */
 @media (prefers-reduced-motion: reduce) {

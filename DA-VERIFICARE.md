@@ -50,3 +50,5 @@ Tutto ciò che nella demo non viene da un suo documento è elencato qui (vale pe
 - Togliere `noindex`, `robots.txt`, aggiungere sitemap, dati strutturati (LodgingBusiness), privacy e cookie (ora non c'è nessun tracciamento né mappa esterna).
 - Mappa per arrivare: da decidere (Google Maps richiede consenso; alternativa immagine + link).
 - Il carattere arriva da Google Fonts: per il sito vero valutare il self-hosting.
+
+- Footer e privacy (22/9/2026): il footer riporta CIR, CIN e P. IVA presi dal materiale e da Airbnb (CIN IT096080B5XIX23IKI, lo stesso sui due annunci); `privacy.html` è una bozza scritta da noi: far confermare a Federica la ragione sociale esatta (titolare "Il Nido tra gli Ulivi di Federica Poma"?), se ha una PEC, e far leggere il testo a chi la segue per le pratiche prima di andare online.
