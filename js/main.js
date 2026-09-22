@@ -326,6 +326,33 @@
     });
   }
 
+  /* ── recensioni: le due casette sono due carte da gioco, inclinate in versi opposti, la destra sotto; in scroll cadono sul tavolo; col mouse la carta si solleva e passa sopra ── */
+  function carteVoci() {
+    const carte = qa('.voci__due .voce'); if (carte.length < 2 || RIDOTTO) return;
+    const mm = gsap.matchMedia();
+    mm.add({ desk: '(min-width: 861px)', mob: '(max-width: 860px)' }, (ctx) => {
+      const base = ctx.conditions.desk ? [-5, 5] : [-1.5, 1.5];
+      carte.forEach((n, i) => {
+        gsap.set(n, { rotation: base[i], transformOrigin: '50% 50%' });
+        if (!QA) gsap.from(n, { y: 90, rotation: base[i] * 3, autoAlpha: 0, duration: 1.2, ease: 'expo.out', delay: i * .15, scrollTrigger: { trigger: '.voci__due', start: 'top 82%', once: true } });
+        if (!ctx.conditions.desk || TOUCH) return;
+        const ombra = q('.voce__ombra', n);
+        const alza = () => {
+          carte.forEach((c) => c.classList.remove('is-alzata')); n.classList.add('is-alzata');
+          gsap.to(n, { scale: 1.06, rotation: base[i] / 2, duration: .45, ease: 'power3.out', overwrite: 'auto' });
+          gsap.to(ombra, { opacity: 1, duration: .45, ease: 'power2.out', overwrite: true });
+        };
+        const posa = () => {
+          n.classList.remove('is-alzata');
+          gsap.to(n, { scale: 1, rotation: base[i], duration: .55, ease: 'power3.out', overwrite: 'auto' });
+          gsap.to(ombra, { opacity: 0, duration: .5, ease: 'power2.out', overwrite: true });
+        };
+        n.addEventListener('mouseenter', alza); n.addEventListener('mouseleave', posa);
+        n.addEventListener('focusin', alza); n.addEventListener('focusout', posa);
+      });
+    });
+  }
+
   /* ── voucher: la carta si inclina con la mano ── */
   function voucher() {
     const c = q('[data-tilt]'); if (!c) return;
@@ -358,7 +385,7 @@
 
   /* ── avvio ── */
   const introHero = hero();
-  manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); reveal();
+  manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); carteVoci(); reveal();
   const tlVelo = velo();
   if (RIDOTTO || QA || RIPRISTINO) { html.classList.add('is-pronto'); if (RIPRISTINO) introHero?.progress(1); }
   else { tlVelo.add(() => introHero.play(), 2.3); tlVelo.add(() => html.classList.add('is-pronto'), 3.4); }
