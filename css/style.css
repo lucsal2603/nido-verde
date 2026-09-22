@@ -331,7 +331,10 @@ html.is-ridotto .voce { grid-area: auto; width: auto; margin-top: 0; }
 
 /* ── domande: fisarmonica ── */
 .domande { padding: var(--sez) var(--gut); background: var(--carta-2); position: relative; z-index: 2; }
-.fisarmonica { max-width: 820px; border-bottom: 1px solid var(--salvia); }
+/* le domande stanno al centro dello schermo: testata centrata e fisarmonica in colonna centrale */
+.domande .sezione__testa { margin-left: auto; margin-right: auto; text-align: center; }
+.domande .sezione__testa .riga { text-align: center; }
+.fisarmonica { max-width: 820px; margin: 0 auto; border-bottom: 1px solid var(--salvia); }
 .fisarmonica__voce { border-top: 1px solid var(--salvia); }
 .fisarmonica__voce h3 { font-size: inherit; }
 .fisarmonica__voce button { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px; text-align: left; padding: 20px 0; background: none; border: 0; color: inherit; font: clamp(1.15rem, 2vw, 1.5rem)/1.2 var(--serif); cursor: pointer; }
