@@ -231,7 +231,7 @@ html.is-ridotto .nido__falda { display: none; }
 .dintorni .bottone { border-color: var(--lime); color: var(--lime); }
 .dintorni .bottone::before { background: var(--lime); }
 @media (hover: hover) and (pointer: fine) { .dintorni .bottone:hover { color: var(--notte); } }
-.dintorni__azioni { padding: 0 var(--gut); margin-top: clamp(28px, 4vw, 48px); position: relative; }
+.dintorni__azioni { position: absolute; left: 32px; bottom: 0; margin: 0; padding: 0; }   /* il tasto della guida sta sotto le descrizioni, a sinistra, dentro il blocco fisso */
 .passi { position: relative; height: 420svh; }
 .passi__fisso { position: sticky; top: 15svh; width: 98vw; margin: 0 auto; }
 .passi__riga { display: flex; gap: 5rem; height: 65svh; align-items: stretch; }
@@ -369,4 +369,5 @@ html.is-menu .wa { opacity: 0; pointer-events: none; }
   .bottone, .bottone::before, .testata, .voce, .voce img, .nido__foto img, .fisarmonica__pannello { transition: none; }
 }
 
-@media (max-width: 860px) { .passo { top: 12px; } }
+@media (max-width: 860px) { .passo { top: 12px; } .dintorni__azioni { left: 0; } .dintorni__azioni .bottone { width: 100%; } }
+html.is-ridotto .dintorni__azioni { position: static; }
