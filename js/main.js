@@ -353,6 +353,18 @@
     });
   }
 
+  /* ── mappa: l'iframe di Google entra solo al clic sulla copertina ── */
+  function mappa() {
+    const box = q('[data-mappa]'), apri = q('[data-mappa-apri]'); if (!box || !apri) return;
+    apri.addEventListener('click', () => {
+      if (box.classList.contains('is-aperta')) return;
+      const f = document.createElement('iframe');
+      f.src = 'https://www.google.com/maps?q=' + encodeURIComponent('Via Zimone 43, Viverone BI') + '&z=15&hl=it&output=embed';
+      f.title = 'Mappa: Il Nido tra gli Ulivi, Viverone'; f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade'; f.setAttribute('allowfullscreen', '');
+      box.appendChild(f); box.classList.add('is-aperta');
+    });
+  }
+
   /* ── voucher: la carta si inclina con la mano ── */
   function voucher() {
     const c = q('[data-tilt]'); if (!c) return;
@@ -385,7 +397,7 @@
 
   /* ── avvio ── */
   const introHero = hero();
-  manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); carteVoci(); reveal();
+  manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); carteVoci(); mappa(); reveal();
   const tlVelo = velo();
   if (RIDOTTO || QA || RIPRISTINO) { html.classList.add('is-pronto'); if (RIPRISTINO) introHero?.progress(1); }
   else { tlVelo.add(() => introHero.play(), 2.3); tlVelo.add(() => html.classList.add('is-pronto'), 3.4); }

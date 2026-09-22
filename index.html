@@ -15,12 +15,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Albert+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=2026092216">
+  <link rel="stylesheet" href="css/style.css?v=2026092217">
   <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual';</script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-  <script src="js/main.js?v=2026092216" defer></script>
+  <script src="js/main.js?v=2026092217" defer></script>
 </head>
 <body>
 
@@ -402,6 +402,15 @@
       <div><dt>Pagamento</dt><dd>La prenotazione si conferma con bonifico bancario; la fattura arriva via mail.</dd></div>
       <div><dt>Recensioni</dt><dd><a href="https://www.airbnb.it/rooms/1009265614261996404" target="_blank" rel="noreferrer">Skyroom su Airbnb</a> e <a href="https://www.airbnb.it/rooms/1009287311700061954" target="_blank" rel="noreferrer">Starsbox su Airbnb</a>.</dd></div>
     </dl>
+    <!-- la mappa di Google si carica solo al clic: niente cookie di terzi finché l'ospite non lo chiede -->
+    <div class="prenota__mappa" data-mappa>
+      <div class="mappa__copertina">
+        <svg class="mappa__casetta" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 30 13v17H2V13z"/></svg>
+        <p class="mappa__dove">Via Zimone 43, frazione Rolle di Viverone, sulla collina sopra il lago.</p>
+        <button class="bottone bottone--pieno" type="button" data-mappa-apri>Guarda dove siamo su Google Maps</button>
+        <p class="mappa__nota">Aprendo la mappa ti colleghi a Google.</p>
+      </div>
+    </div>
   </section>
 </main>
 
