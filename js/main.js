@@ -285,8 +285,8 @@
       const prima = attivo; attivo = k;
       if (prima >= 0) gsap.to(passi[prima], { autoAlpha: 0, duration: .3, ease: 'power2.in', overwrite: true });
       gsap.fromTo(passi[k], { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: .55, ease: 'power2.out', delay: prima >= 0 ? .2 : 0, overwrite: true });
-      /* a destra: l'omino a piedi (verso alterno) o, nel passo del lago, l'omino in bici */
-      const quale = passi[k].dataset.omino === 'bici' ? 2 : k % 2;
+      /* a destra: un'animazione per tappa (panchina, a piedi, saluto, bici, barca, auto), nello stesso ordine dei passi */
+      const quale = Math.min(k, omini.length - 1);
       omini.forEach((o, i) => gsap.to(o, { autoAlpha: i === quale ? 1 : 0, duration: .45, ease: 'power2.inOut', overwrite: true }));
       tappe.forEach((t, i) => { t.classList.toggle('is-attiva', i === k); t.classList.toggle('is-fatta', i <= k); });
     };
