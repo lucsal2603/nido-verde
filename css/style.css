@@ -60,8 +60,6 @@ html.is-statico .riga i, html.is-statico [data-sale] { opacity: 1; transform: no
 .velo__anta--dx { right: 0; transform-origin: 100% 50%; }
 .velo__marchio { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 14px; color: var(--carta); }
 .velo__casa { width: clamp(96px, 14vw, 150px); height: auto; }
-.velo__stella { color: var(--lime); }
-.velo__nome { font: italic 1.2rem var(--serif); overflow: hidden; display: block; }
 html.is-statico .velo { display: none; }
 
 /* ── foglia: il puntatore ── */

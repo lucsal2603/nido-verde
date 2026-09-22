@@ -117,13 +117,12 @@
     lenis?.stop(); html.classList.add('is-velato');
     const tratti = qa('.velo__tratto', v);
     tratti.forEach((p) => { const l = p.getTotalLength(); p.style.strokeDasharray = l; p.style.strokeDashoffset = l; });
+    /* solo la casetta bianca che si disegna, poi il tetto si apre */
     tl.to(tratti, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut', stagger: .18 }, .15)
-      .fromTo(q('.velo__stella', v), { scale: .5, opacity: 0, transformOrigin: '50% 50%' }, { scale: 1, opacity: 1, duration: .55 }, .95)
-      .fromTo(q('.velo__nome', v), { yPercent: 110 }, { yPercent: 0, duration: .7 }, 1.05)
-      .to(q('.velo__marchio', v), { opacity: 0, duration: .35, ease: 'power2.in' }, 2.0)
-      .to(q('.velo__anta--sx', v), { rotateY: -96, duration: 1.2, ease: 'power3.inOut' }, 2.15)
-      .to(q('.velo__anta--dx', v), { rotateY: 96, duration: 1.2, ease: 'power3.inOut' }, 2.15)
-      .add(() => { v.remove(); html.classList.remove('is-velato'); lenis?.start(); }, 3.4);
+      .to(q('.velo__marchio', v), { opacity: 0, duration: .35, ease: 'power2.in' }, 1.7)
+      .to(q('.velo__anta--sx', v), { rotateY: -96, duration: 1.2, ease: 'power3.inOut' }, 1.85)
+      .to(q('.velo__anta--dx', v), { rotateY: 96, duration: 1.2, ease: 'power3.inOut' }, 1.85)
+      .add(() => { v.remove(); html.classList.remove('is-velato'); lenis?.start(); }, 3.1);
     return tl;
   }
 
@@ -445,7 +444,7 @@
   manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); carteVoci(); mappa(); popup(); reveal();
   const tlVelo = velo();
   if (RIDOTTO || QA || RIPRISTINO) { html.classList.add('is-pronto'); if (RIPRISTINO) introHero?.progress(1); }
-  else { tlVelo.add(() => introHero.play(), 2.3); tlVelo.add(() => html.classList.add('is-pronto'), 3.4); }
+  else { tlVelo.add(() => introHero.play(), 2.0); tlVelo.add(() => html.classList.add('is-pronto'), 3.1); }
   window.addEventListener('load', () => ST.refresh());
   document.fonts?.ready.then(() => ST.refresh());
   if (RIPRISTINO) {
