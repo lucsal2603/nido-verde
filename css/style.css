@@ -256,7 +256,7 @@ html.is-ridotto .nido__falda { display: none; }
 .passi__barra i { display: block; width: 100%; height: 3px; background: var(--carta); transform: translateX(-100%); }
 @media (max-width: 860px) {
   .passi { height: 420svh; }
-  .passi__fisso { top: 4svh; width: calc(100vw - 32px); }
+  .passi__fisso { top: calc(var(--testata-h) + 6px); width: calc(100vw - 32px); }   /* sotto la testata fissa, così «Dintorni» non ci finisce sotto */
   .passi__fisso .dintorni__testa { padding: 0; margin-bottom: 14px; }
   .passi__fisso .dintorni__testa .titolo-l { font-size: clamp(30px, 9vw, 40px); }
   .passi__riga { flex-direction: column; gap: 1rem; height: 60svh; }
