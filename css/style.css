@@ -240,7 +240,7 @@ html.is-ridotto .nido__falda { display: none; }
 .passi__fisso .dintorni__testa .sezione__intro { max-width: 64ch; margin-top: .7em; font-size: 1rem; }
 .passi__riga { display: flex; gap: 5rem; height: 47svh; align-items: stretch; }
 .passi__testi { flex: 1; position: relative; }
-.passo { position: absolute; inset: 0 0 auto 32px; display: flex; flex-direction: column; gap: 1.5rem; opacity: 0; visibility: hidden; }
+.passo { position: absolute; inset: clamp(22px, 3.4svh, 44px) 0 auto 32px; display: flex; flex-direction: column; gap: 1.5rem; opacity: 0; visibility: hidden; }   /* le descrizioni stanno un po' sotto la testata */
 .passo__titolo { display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem; margin: 0; font: 400 clamp(2.2rem, 3.8vw, 3.4rem)/1.05 var(--serif); letter-spacing: -.02em; color: var(--carta); }
 .passo__corsivo { font: italic clamp(2.2rem, 3.8vw, 3.4rem)/1.05 var(--serif); color: #fff; }
 .passo__testo { font-size: 18px; line-height: 1.4; color: var(--salvia-chiara); max-width: 60ch; }
@@ -375,3 +375,5 @@ html.is-menu .wa { opacity: 0; pointer-events: none; }
   .nastro__riga { width: auto; white-space: normal; flex-wrap: wrap; }
   .bottone, .bottone::before, .testata, .voce, .voce img, .nido__foto img, .fisarmonica__pannello { transition: none; }
 }
+
+@media (max-width: 860px) { .passo { top: 12px; } }
