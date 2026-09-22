@@ -24,7 +24,13 @@
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
   }
-  const vaiA = (el) => { if (lenis) lenis.scrollTo(el, { offset: -72, duration: 1.4 }); else el.scrollIntoView({ behavior: RIDOTTO ? 'auto' : 'smooth' }); };
+  /* i salti da un pulsante a una sezione sono lenti e morbidi: la durata cresce con la distanza (da 2,2 a 4,5 s), con partenza e arrivo dolci */
+  const vaiA = (el) => {
+    if (!lenis) { el.scrollIntoView({ behavior: RIDOTTO ? 'auto' : 'smooth' }); return; }
+    const distanza = Math.abs(el.getBoundingClientRect().top - 72);
+    const durata = gsap.utils.clamp(2.2, 4.5, 2.2 + distanza / 2200);
+    lenis.scrollTo(el, { offset: -72, duration: durata, easing: (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2) });
+  };
 
   /* ── ricarica: si riparte da dove si era (sessionStorage: dura finché la scheda resta aperta); una visita nuova parte dall'alto ── */
   const NAV = performance.getEntriesByType?.('navigation')[0]?.type || 'navigate';
