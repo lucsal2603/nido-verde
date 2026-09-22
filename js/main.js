@@ -312,6 +312,7 @@
       const corsa = Math.max(0, scena.clientWidth - img.clientWidth);
       gsap.set(img, { x: frazione(u, k) * corsa });
     };
+    gsap.set(q('.passi__omino--cammina img', root), { scaleX: -1 });   /* l'omino a piedi guarda a sinistra nel render: specchiato, cammina nel verso in cui scivola */
     attiva(0); posiziona(0, 0);
     ST.create({
       trigger: root, start: 'top 15%', end: () => `+=${Math.max(1, root.offsetHeight - fisso.offsetHeight)}`, invalidateOnRefresh: true,
