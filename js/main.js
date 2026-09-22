@@ -291,7 +291,7 @@
     ST.create({ trigger: '.dintorni', start: 'top 80px', end: 'bottom 80px', onToggle: (e) => testata.classList.toggle('is-scura', e.isActive) });
     if (RIDOTTO) { html.classList.add('is-ridotto'); return; }
     root.style.height = `${(N + 1) * 60}svh`;
-    const fisso = q('.passi__fisso', root);
+    const fisso = q('.passi__fisso', root), scena = q('.passi__scena', root);
     gsap.set(passi[0], { autoAlpha: 1 }); gsap.set(omini[0], { autoAlpha: 1 });
     /* la barra parte da translateX(-100%) nel CSS: GSAP la leggerebbe in pixel, quindi si azzera x e si lavora solo in percentuale */
     gsap.set(barre, { xPercent: -100, x: 0 });
@@ -305,15 +305,23 @@
       omini.forEach((o, i) => gsap.to(o, { autoAlpha: i === quale ? 1 : 0, duration: .45, ease: 'power2.inOut', overwrite: true }));
       tappe.forEach((t, i) => { t.classList.toggle('is-attiva', i === k); t.classList.toggle('is-fatta', i <= k); });
     };
-    attiva(0);
+    /* come nel sito copiato: l'animazione a destra parte dal bordo sinistro della scena e scivola verso destra man mano che la sua barra si riempie */
+    const frazione = (u, i) => clamp01((u - i) / (i === N - 1 ? 2 : 1));
+    const posiziona = (u, k) => {
+      const img = q('img', omini[Math.min(k, omini.length - 1)]); if (!img) return;
+      const corsa = Math.max(0, scena.clientWidth - img.clientWidth);
+      gsap.set(img, { x: frazione(u, k) * corsa });
+    };
+    attiva(0); posiziona(0, 0);
     ST.create({
       trigger: root, start: 'top 15%', end: () => `+=${Math.max(1, root.offsetHeight - fisso.offsetHeight)}`, invalidateOnRefresh: true,
       onUpdate: (e) => {
         const u = e.progress * (N + 1), k = Math.min(N - 1, Math.floor(u));
         attiva(k);
-        barre.forEach((b, i) => { const f = clamp01((u - i) / (i === N - 1 ? 2 : 1)); gsap.set(b, { xPercent: -100 + f * 100, x: 0 }); });
+        barre.forEach((b, i) => gsap.set(b, { xPercent: -100 + frazione(u, i) * 100, x: 0 }));
+        posiziona(u, k);
       },
-      onRefresh: (e) => { const u = e.progress * (N + 1); attiva(Math.min(N - 1, Math.floor(u))); },
+      onRefresh: (e) => { const u = e.progress * (N + 1), k = Math.min(N - 1, Math.floor(u)); attiva(k); posiziona(u, k); },
     });
   }
 
