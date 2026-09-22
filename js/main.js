@@ -293,7 +293,11 @@
     const N = passi.length; let attivo = -1;
     ST.create({ trigger: '.dintorni', start: 'top 80px', end: 'bottom 80px', onToggle: (e) => testata.classList.toggle('is-scura', e.isActive) });
     if (RIDOTTO) { html.classList.add('is-ridotto'); return; }
-    root.style.height = `${(N + 1) * 60}svh`;
+    /* su telefono il blocco resta fermo per un altro schermo dopo l'ultima tappa, mentre la sezione del voucher sale a coprirlo (margine negativo nel CSS) */
+    const mob = window.matchMedia('(max-width: 860px)').matches; let sonda = null;
+    if (mob) { sonda = document.createElement('i'); sonda.style.cssText = 'position:absolute;top:0;left:0;width:0;height:100svh;visibility:hidden;pointer-events:none'; root.appendChild(sonda); }
+    root.style.height = mob ? `calc(${(N + 1) * 60}svh + 100svh)` : `${(N + 1) * 60}svh`;
+    const extra = () => (sonda ? sonda.offsetHeight : 0);
     const fisso = q('.passi__fisso', root), scena = q('.passi__scena', root);
     /* su telefono la testata «Dintorni / Cosa visitare» entra nel blocco fisso e resta a schermo per tutte le tappe; su computer resta sopra e scorre via */
     const testaSez = q('.dintorni__testa');
@@ -321,7 +325,7 @@
     gsap.set(q('.passi__omino--cammina img', root), { scaleX: -1 });   /* l'omino a piedi guarda a sinistra nel render: specchiato, cammina nel verso in cui scivola */
     attiva(0); posiziona(0, 0);
     ST.create({
-      trigger: root, start: () => `top ${parseFloat(getComputedStyle(fisso).top) || 0}px`, end: () => `+=${Math.max(1, root.offsetHeight - fisso.offsetHeight)}`, invalidateOnRefresh: true,
+      trigger: root, start: () => `top ${parseFloat(getComputedStyle(fisso).top) || 0}px`, end: () => `+=${Math.max(1, root.offsetHeight - fisso.offsetHeight - extra())}`, invalidateOnRefresh: true,
       onUpdate: (e) => {
         const u = e.progress * (N + 1), k = Math.min(N - 1, Math.floor(u));
         attiva(k);
