@@ -365,6 +365,42 @@
     });
   }
 
+  /* ── popup di benvenuto: alla prima visita, poi ogni quattro visite; una sola volta per sessione; mai in QA o con un'ancora nell'indirizzo ── */
+  function popup() {
+    const box = q('#popup'); if (!box || QA || location.hash) return;
+    const OGNI = 4; let visite = 0, mostrato = 0, giaSessione = false;
+    try {
+      giaSessione = !!sessionStorage.getItem('nido:popup');
+      if (!sessionStorage.getItem('nido:visita')) { sessionStorage.setItem('nido:visita', '1'); visite = (parseInt(localStorage.getItem('nido:visite') || '0', 10) || 0) + 1; localStorage.setItem('nido:visite', String(visite)); }
+      else visite = parseInt(localStorage.getItem('nido:visite') || '1', 10) || 1;
+      mostrato = parseInt(localStorage.getItem('nido:popup_a') || '0', 10) || 0;
+    } catch (e) { return; }   /* senza memoria niente popup: meglio zitti che invadenti */
+    if (giaSessione || (mostrato > 0 && visite - mostrato < OGNI)) return;
+    const velo = q('.popup__velo', box), carta = q('.popup__carta', box), chiudi = q('.popup__chiudi', box);
+    let aperto = false;
+    const apri = () => {
+      if (aperto || menuAperto) return; aperto = true; box.hidden = false; lenis?.stop();
+      try { sessionStorage.setItem('nido:popup', '1'); localStorage.setItem('nido:popup_a', String(visite)); } catch (e) { /* niente */ }
+      gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .to(velo, { opacity: 1, duration: .5 }, 0)
+        .fromTo(carta, { opacity: 0, y: 40, scale: .94 }, { opacity: 1, y: 0, scale: 1, duration: .8 }, .1)
+        .fromTo(q('img', carta), { scale: 1.12 }, { scale: 1, duration: 1.6, ease: 'power2.out' }, .1)
+        .add(() => chiudi.focus({ preventScroll: true }), .5);
+    };
+    const chiudiPopup = () => {
+      if (!aperto) return; aperto = false;
+      gsap.timeline({ onComplete: () => { box.hidden = true; lenis?.start(); } })
+        .to(carta, { opacity: 0, y: 24, scale: .96, duration: .35, ease: 'power2.in' }, 0)
+        .to(velo, { opacity: 0, duration: .4 }, .05);
+    };
+    qa('[data-popup-chiudi]', box).forEach((el) => el.addEventListener('click', chiudiPopup));
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') chiudiPopup(); });
+    const attesa = RIDOTTO ? 800 : 2600;
+    const parti = () => setTimeout(apri, attesa);
+    if (html.classList.contains('is-pronto')) parti();
+    else new MutationObserver((m, oss) => { if (html.classList.contains('is-pronto')) { oss.disconnect(); parti(); } }).observe(html, { attributes: true, attributeFilter: ['class'] });
+  }
+
   /* ── voucher: la carta si inclina con la mano ── */
   function voucher() {
     const c = q('[data-tilt]'); if (!c) return;
@@ -396,7 +432,7 @@
 
   /* ── avvio ── */
   const introHero = hero();
-  manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); carteVoci(); mappa(); reveal();
+  manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); carteVoci(); mappa(); popup(); reveal();
   const tlVelo = velo();
   if (RIDOTTO || QA || RIPRISTINO) { html.classList.add('is-pronto'); if (RIPRISTINO) introHero?.progress(1); }
   else { tlVelo.add(() => introHero.play(), 2.3); tlVelo.add(() => html.classList.add('is-pronto'), 3.4); }
