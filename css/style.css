@@ -72,8 +72,7 @@ html.con-foglia, html.con-foglia * { cursor: none !important; }
 @media (hover: none) { .foglia { display: none; } }
 
 /* ── testata ── */
-.testata { position: fixed; top: 0; left: 0; right: 0; z-index: 60; height: var(--testata-h); padding: 0 var(--gut); display: flex; align-items: center; gap: 28px; transition: transform .55s var(--e-out), color var(--d-lenta); }
-.testata.is-nascosta { transform: translateY(-110%); }
+.testata { position: fixed; top: 0; left: 0; right: 0; z-index: 60; height: var(--testata-h); padding: 0 var(--gut); display: flex; align-items: center; gap: 28px; transition: color var(--d-lenta); }
 .testata.is-scura { color: var(--bianco); }
 .testata__logo { display: flex; align-items: center; gap: 12px; text-decoration: none; font: 1.05rem var(--serif); margin-right: auto; }
 .testata__logo img { width: 40px; height: auto; }

@@ -67,13 +67,7 @@
 
   /* ── testata: si nasconde scendendo, torna salendo, si scurisce sulla notte e sul piede ── */
   const testata = q('#testata');
-  let ultimoY = 0, accumulo = 0;
-  const suScroll = (y) => {
-    const d = y - ultimoY; ultimoY = y;
-    if (d > 0) { accumulo += d; if (accumulo > 90 && y > 120 && !menuAperto) testata.classList.add('is-nascosta'); }
-    else { accumulo = 0; testata.classList.remove('is-nascosta'); }
-  };
-  if (lenis) lenis.on('scroll', ({ scroll }) => suScroll(scroll)); else window.addEventListener('scroll', () => suScroll(window.scrollY), { passive: true });
+  /* la testata resta sempre visibile: niente sfondo, cambia solo colore quando passa sulle sezioni scure (classe is-scura) */
 
   /* ── foglia: il puntatore ── */
   const foglia = q('#foglia');
