@@ -87,6 +87,38 @@
     qa('a, button').forEach((el) => { el.addEventListener('pointerenter', () => html.classList.add('foglia-grande')); el.addEventListener('pointerleave', () => html.classList.remove('foglia-grande')); });
   }
 
+  /* ── foglie di ulivo sparse: piatte, nei colori del sito, con un filo di parallasse e un dondolio lento ── */
+  function foglieUlivo() {
+    const FOGLIA = '<svg viewBox="0 0 24 96"><path d="M12 2C4 22 3 60 12 94 21 60 20 22 12 2z" fill="var(--f1)"/><path d="M12 2c8 20 9 58 0 92z" fill="var(--f2)"/><path d="M12 8v84" stroke="var(--f3)" stroke-width="1" fill="none" opacity=".7"/></svg>';
+    const RAMETTO = '<svg viewBox="0 0 120 120"><path d="M8 112C40 86 72 50 112 8" stroke="#8B5E3C" stroke-width="2.4" fill="none" stroke-linecap="round"/>' +
+      [[26, 94, -20], [40, 80, 70], [56, 64, -10], [70, 50, 80], [86, 34, 0], [98, 22, 85]].map(([x, y, r]) =>
+        `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M0 0C-5-10-5-26 0-36 5-26 5-10 0 0z" fill="var(--f1)"/><path d="M0 0c5-10 5-26 0-36z" fill="var(--f2)"/></g>`).join('') + '</svg>';
+    /* [sezione, x %, y %, dimensione px, rotazione, tipo] — ai margini, lontano dai testi */
+    const MAPPA = [
+      ['#nidi', 94, 14, 61, 28, 'f'], ['#nidi', 3, 38, 46, -40, 'f'], ['#nidi', 96, 62, 112, -18, 'r'], ['#nidi', 2, 86, 54, 62, 'f'],
+      ['#magia', 92, 20, 50, 120, 'f'], ['#magia', 97, 92, 96, 200, 'r'],
+      ['#family', 96, 12, 54, -24, 'f'], ['#family', 50, 92, 43, 80, 'f'],
+      ['#extra', 4, 8, 54, 36, 'f'], ['#extra', 95, 90, 102, -150, 'r'],
+      ['#dintorni', 96, 4, 50, -60, 'f'],
+      ['#voucher', 3, 16, 102, 20, 'r'], ['#voucher', 95, 78, 54, -32, 'f'],
+      ['#recensioni', 96, 10, 46, 48, 'f'], ['#recensioni', 3, 64, 57, -70, 'f'],
+      ['#domande', 6, 22, 112, -10, 'r'], ['#domande', 94, 58, 50, 30, 'f'], ['#domande', 90, 90, 39, -80, 'f'],
+      ['#prenota', 96, 16, 54, -46, 'f'], ['#prenota', 2, 88, 92, 160, 'r'],
+    ];
+    MAPPA.forEach(([sel, x, y, d, r, tipo], i) => {
+      const sez = q(sel); if (!sez) return;
+      if (getComputedStyle(sez).position === 'static') sez.style.position = 'relative';
+      const scuro = /extra|dintorni/.test(sel);
+      const el = document.createElement('span');
+      el.className = 'ulivo' + (x > 1 && x < 8 && tipo === 'f' ? ' ulivo--largo' : '') + (tipo === 'r' ? ' ulivo--rametto' : '') + (scuro ? ' ulivo--notte' : '');
+      el.setAttribute('aria-hidden', 'true');
+      el.style.cssText = `left:${x}%;top:${y}%;--d:${d}px;--r:${r}deg;--ritardo:${-(i * 1.7) % 9}s`;
+      el.innerHTML = `<span class="ulivo__dondolo">${tipo === 'r' ? RAMETTO : FOGLIA}</span>`;
+      sez.appendChild(el);
+      if (!RIDOTTO) gsap.fromTo(el, { y: 40 + (i % 3) * 30 }, { y: -40 - (i % 3) * 30, ease: 'none', scrollTrigger: { trigger: sez, start: 'top bottom', end: 'bottom top', scrub: true } });
+    });
+  }
+
   /* ── righe mascherate e blocchi che salgono ── */
   const rigaHero = qa('.hero .riga i');
   const righe = (root) => qa('.riga i', root).filter((i) => !rigaHero.includes(i));
@@ -180,9 +212,14 @@
   function nidi() {
     if (RIDOTTO) return;
     qa('[data-nido]').forEach((n) => {
-      const sx = q('.nido__falda--sx', n), dx = q('.nido__falda--dx', n), img = q('.nido__foto img', n);
-      gsap.timeline({ scrollTrigger: { trigger: n, start: 'top 82%', end: 'top 28%', scrub: .5 } })
-        .to(sx, { rotateY: -100, ease: 'none' }, 0).to(dx, { rotateY: 100, ease: 'none' }, 0);
+      const alto = q('.nido__guscio--alto', n), basso = q('.nido__guscio--basso', n), crepa = q('.nido__crepa', n), img = q('.nido__foto img', n);
+      /* come un uovo: la crepa corre da sinistra a destra, il guscio trema, la metà alta si abbassa e cade in basso a destra; la metà bassa resta ferma, poi scende */
+      gsap.timeline({ scrollTrigger: { trigger: n, start: 'top 82%', end: 'top 22%', scrub: .5 } })
+        .to(crepa, { clipPath: 'inset(0 0% 0 0)', ease: 'none', duration: .22 }, 0)
+        .to([alto, basso], { keyframes: [{ x: -3, rotate: -.6 }, { x: 3, rotate: .6 }, { x: -2, rotate: -.3 }, { x: 0, rotate: 0 }], ease: 'none', duration: .12 }, .1)
+        .set(crepa, { autoAlpha: 0 }, .24)
+        .to(alto, { keyframes: [{ y: '6%', rotate: 4, duration: .18 }, { xPercent: 120, yPercent: 140, rotate: 34, duration: .48 }], ease: 'none' }, .24)
+        .to(basso, { yPercent: 102, ease: 'none', duration: .3 }, .7);
       gsap.fromTo(img, { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: n, start: 'top bottom', end: 'bottom top', scrub: true } });
     });
   }
@@ -441,7 +478,7 @@
 
   /* ── avvio ── */
   const introHero = hero();
-  manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); carteVoci(); mappa(); popup(); reveal();
+  foglieUlivo(); manifesto(); nidi(); family(); stelle(); nastro(); coccole(); dintorni(); voucher(); domande(); piede(); contatori(); carteVoci(); mappa(); popup(); reveal();
   const tlVelo = velo();
   if (RIDOTTO || QA || RIPRISTINO) { html.classList.add('is-pronto'); if (RIPRISTINO) introHero?.progress(1); }
   else { tlVelo.add(() => introHero.play(), 2.0); tlVelo.add(() => html.classList.add('is-pronto'), 3.1); }

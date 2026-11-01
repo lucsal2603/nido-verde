@@ -152,10 +152,14 @@ html.is-ridotto .manifesto__testo { color: var(--inchiostro); }
 .nido__foto { position: absolute; inset: 0; margin: 0; }
 .nido__foto img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--e-out); }
 @media (hover: hover) { .nido:hover .nido__foto img { transform: scale(1.04); } }
-.nido__falda { position: absolute; top: 0; bottom: 0; width: 50.5%; background: var(--oliva); will-change: transform; backface-visibility: hidden; }
-.nido__falda--sx { left: 0; transform-origin: 0 50%; }
-.nido__falda--dx { right: 0; transform-origin: 100% 50%; }
-html.is-ridotto .nido__falda { display: none; }
+/* il guscio: si incrina a zig-zag come un uovo, la metà alta cade in basso a destra, quella bassa resta ferma e poi scende */
+.nido__guscio { position: absolute; inset: -1px; background: var(--oliva); will-change: transform; }
+.nido__guscio--alto { clip-path: polygon(0 0, 100% 0, 100% 53%, 89% 45%, 79% 57%, 68% 46%, 58% 58%, 48% 44%, 38% 57%, 28% 45%, 18% 58%, 9% 46%, 0% 54%); transform-origin: 100% 55%; }
+.nido__guscio--basso { clip-path: polygon(0% 54%, 9% 46%, 18% 58%, 28% 45%, 38% 57%, 48% 44%, 58% 58%, 68% 46%, 79% 57%, 89% 45%, 100% 53%, 100% 100%, 0 100%); }
+.nido__crepa { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.nido__crepa polyline { fill: none; stroke: var(--notte); stroke-width: 2.5; stroke-linejoin: miter; vector-effect: non-scaling-stroke; }
+.nido__crepa { clip-path: inset(0 100% 0 0); }
+html.is-ridotto .nido__guscio, html.is-ridotto .nido__crepa { display: none; }
 .nido__corpo { padding: clamp(24px, 3vw, 44px) 0 0; }
 .nido__corpo > p { max-width: 52ch; }
 .nido__nome { font-size: var(--t-l); line-height: 1; }
@@ -452,3 +456,13 @@ html.is-ridotto .dintorni__azioni { position: static; }
   .nastro__riga--contro { color: var(--salvia-chiara); }
   .citazione:nth-child(n + 4) { display: none; }
 }
+
+/* ── foglie di ulivo sparse: sopra verde oliva, sotto argento salvia, come le foglie vere ── */
+.ulivo { position: absolute; z-index: 0; width: calc(var(--d) * .3); height: var(--d); margin: calc(var(--d) * -.5) 0 0 calc(var(--d) * -.125); pointer-events: none; --f1: var(--oliva); --f2: var(--salvia-chiara); --f3: var(--carta); }
+.ulivo--rametto { width: var(--d); margin-left: calc(var(--d) * -.5); }
+.ulivo--notte { --f1: var(--salvia); --f2: #3B4F3D; --f3: var(--notte); opacity: .75; }
+.ulivo__dondolo { display: block; width: 100%; height: 100%; transform: rotate(var(--r)); animation: dondola 9s ease-in-out var(--ritardo) infinite; }
+.ulivo svg { display: block; width: 100%; height: 100%; overflow: visible; }
+@keyframes dondola { 0%, 100% { transform: rotate(var(--r)); } 50% { transform: rotate(calc(var(--r) + 9deg)) translateY(-4px); } }
+@media (max-width: 760px) { .ulivo { width: calc(var(--d) * .2); height: calc(var(--d) * .65); } .ulivo--rametto { width: calc(var(--d) * .65); } .ulivo--largo { display: none; } }
+@media (prefers-reduced-motion: reduce) { .ulivo__dondolo { animation: none; } }
