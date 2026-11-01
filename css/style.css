@@ -132,19 +132,7 @@ html.is-ridotto .manifesto__testo { color: var(--inchiostro); }
 
 /* ── il foglio che sale, e i due nidi ── */
 .foglio { position: relative; z-index: 2; margin-top: -100svh; background: var(--carta-2); clip-path: polygon(0 var(--tetto), 50% 0, 100% var(--tetto), 100% 100%, 0 100%); }
-.nidi { padding: calc(var(--tetto) + var(--tegole) + var(--sez) * .5) var(--gut) calc(var(--sez) * .7); }
-/* il tetto del foglio: due falde di tegole in cotto che seguono la punta, gronda in legno e coppo di colmo */
-.foglio { --tegole: clamp(30px, 4.6vw, 70px); --pendenza: atan2(var(--tetto), 50vw); }
-.tetto { position: absolute; inset: 0 0 auto 0; height: calc(var(--tetto) + var(--tegole)); pointer-events: none; z-index: 1; }
-.tetto__falda { position: absolute; top: var(--tetto); width: calc(50% + 1px); height: var(--tegole);
-  background:
-    linear-gradient(to bottom, transparent calc(100% - 9px), #6B3E24 calc(100% - 9px), #6B3E24 calc(100% - 7px), var(--legno) calc(100% - 7px)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='40' viewBox='0 0 32 40'%3E%3Crect width='32' height='40' fill='%23763F25'/%3E%3Cg id='t'%3E%3Cpath d='M1 0h30v12q0 7.5-15 7.5T1 12z' fill='%23A85A35'/%3E%3Cpath d='M5 0h9v17.6q-6-.9-8-3.6z' fill='%23C1714A'/%3E%3Cpath d='M1 12q0 7.5 15 7.5T31 12v1.6q0 7.4-15 7.4T1 13.6z' fill='%23874A2C' opacity='.7'/%3E%3C/g%3E%3Cuse href='%23t' x='-16' y='20'/%3E%3Cuse href='%23t' x='16' y='20'/%3E%3C/svg%3E") 0 0 / clamp(20px, 2.2vw, 34px) auto repeat; }
-.tetto__falda--sx { left: 0; transform-origin: 0 0; transform: skewY(calc(-1 * var(--pendenza))); }
-.tetto__falda--dx { right: 0; transform-origin: 100% 0; transform: skewY(var(--pendenza)); }
-.tetto__colmo { position: absolute; left: 50%; top: 0; width: calc(var(--tegole) * .62); height: calc(var(--tegole) * .9); transform: translateX(-50%); background: #8F4C2C; clip-path: polygon(50% 0, 100% 34%, 100% 100%, 50% 72%, 0 100%, 0 34%); }
-.tetto__colmo::after { content: ""; position: absolute; inset: 0; background: #B5643C; clip-path: polygon(50% 8%, 82% 30%, 82% 80%, 50% 60%); }
-@supports not (transform: skewY(atan2(1px, 1px))) { .tetto { display: none; } .nidi { padding-top: calc(var(--tetto) + var(--sez) * .6); } }
+.nidi { padding: calc(var(--tetto) + var(--sez) * .6) var(--gut) calc(var(--sez) * .7); }
 .sezione__testa { max-width: 900px; margin-bottom: clamp(48px, 7vw, 96px); }
 .sezione__intro { margin-top: 1.4em; max-width: 58ch; font-size: 1.1rem; }
 .nidi__griglia { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 64px); align-items: start; }
